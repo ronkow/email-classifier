@@ -1,5 +1,7 @@
 # SPAM FILTER USING THE BAG OF WORDS MODEL
 
+# Raw data can be downloaded from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
+
 # (1) PREPARE THE RAW DATA
 
 # Spam text files stored in d://email_classifier/data/spam/
@@ -28,7 +30,7 @@ nrow(textspam_df2)
 spam_df <- data.frame(text = textspam_df2, label = "spam")
 
 # CSV file allows viewing of data in Excel
-write.csv(spam_df, "d://email_classifier/spam.csv")
+write.csv(spam_df, "d://email_classifier/data/spam.csv")
 
 # ------------------------------------------------------------------
 # Same process for ham emails
@@ -51,7 +53,7 @@ nrow(textham_df)
 nrow(textham_df2)
 
 ham_df <- data.frame(text = textham_df2, label = "ham")
-write.csv(ham_df, "d://email_classifier/ham.csv")
+write.csv(ham_df, "d://email_classifier/data/ham.csv")
 
 # ------------------------------------------------------------------
 # (2) SHUFFLE ROWS AND SPLIT DATA INTO TRAINING AND TEST DATASETS
