@@ -220,7 +220,7 @@ summary(train_results)
 
 
 # ------------------------------------------------------------------
-# PROCESS THE TEST DATASET
+# (6) PREPARE THE TEST DATASET
 
 # Create a vector containing the 105 words in the BoW
 bagofwords <- colnames(train_df_tf)
@@ -246,11 +246,14 @@ test_df_tfidf_bagofwords <- test_df_tfidf_allwords[,bagofwords]
 
 
 # ------------------------------------------------------------------
-# TEST THE MODELS
+# (7) TEST THE MODELS
 
 test_tf <- predict(model_tf, test_df_tf_bagofwords)
 test_bin <- predict(model_bin, test_df_bin_bagofwords)
 test_tfidf <- predict(model_tfidf, test_df_tfidf_bagofwords)
+
+# ------------------------------------------------------------------
+# (8) ANALYSE THE RESULTS
 
 confusionMatrix(data = test_tf, 
                 reference = test_hamspam$label, 
