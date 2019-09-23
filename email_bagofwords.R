@@ -232,9 +232,9 @@ test_corpus <- VCorpus(VectorSource(test_hamspam$text))
 test_corpus2 <- clean_corpus(test_corpus)
 
 # DTM with all words
-test_dtm_tf_allwords = DocumentTermMatrix(test_corpus2, control = list(weighting = weightTf))
-test_dtm_bin_allwords = DocumentTermMatrix(test_corpus2, control = list(weighting = weightBin))
-test_dtm_tfidf_allwords = DocumentTermMatrix(test_corpus2, control = list(weighting = weightTfIdf))
+test_dtm_tf_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightTf))
+test_dtm_bin_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightBin))
+test_dtm_tfidf_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightTfIdf))
 
 # Convert DTM to data frame
 test_df_tf_allwords <- as.data.frame(as.matrix(test_dtm_tf_allwords))
