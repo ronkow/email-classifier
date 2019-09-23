@@ -1,8 +1,9 @@
-# SPAM FILTER USING THE BAG OF WORDS MODEL
+# EMAIL CLASSIFIER USING THE BAG OF WORDS MODEL
 
-# Raw data can be downloaded from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
+# For step (1), download the raw data from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
 
 # (1) PREPARE THE RAW DATA
+# You can skip step (1) and proceed to step (2) using ham.csv and spam.csv provided here.
 
 # Spam text files stored in d://email_classifier/data/spam/
 setwd("d://email_classifier/data/spam")
