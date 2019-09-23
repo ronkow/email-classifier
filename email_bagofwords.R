@@ -83,7 +83,7 @@ train_hamspam <- hamspam_df2[1:3916,]
 test_hamspam <- hamspam_df2[3917:4895,]
 
 # Write to CSV files
-write.csv(train_hamspam, "d://email_classifier/train_hamspam.csv")
+write.csv(train_hamspaum, "d://email_classifier/train_hamspam.csv")
 write.csv(test_hamspam, "d://email_classifier/test_hamspam.csv")
 
 # ------------------------------------------------------------------
@@ -105,10 +105,6 @@ clean_corpus <- function(corpus){
 }
 
 # Create corpus and clean data
-train_corpus <- VCorpus(VectorSource(train_hamspam$text))
-train_corpus2 <- clean_corpus(train_corpus)
-
-# Create corpus and clean corpus
 train_corpus <- VCorpus(VectorSource(train_hamspam$text))
 train_corpus2 <- clean_corpus(train_corpus)
 
