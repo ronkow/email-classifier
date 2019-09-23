@@ -33,7 +33,6 @@ spam_df <- data.frame(text = textspam_df2, label = "spam")
 # CSV file allows viewing of data in Excel
 write.csv(spam_df, "d://email_classifier/data/spam.csv")
 
-# ------------------------------------------------------------------
 # Same process for ham emails
 
 setwd("d://email_classifier/data/ham")
