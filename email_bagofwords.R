@@ -78,7 +78,6 @@ head(randomindex, n = 10)
 head(hamspam_df2, n = 3)
 head(rownames(hamspam_df2), n = 10)
 
-
 # 80%/20% training/testing split = 3916/979 
 train_hamspam <- hamspam_df2[1:3916,]
 test_hamspam <- hamspam_df2[3917:4895,]
@@ -135,7 +134,6 @@ train_corpus3 <- train_corpus2 %>%
 train_dtm_tf <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightTf))
 train_dtm_tf2 <- removeSparseTerms(train_dtm_tf, 0.96)
 
-
 # List all the words in the final BoW
 Terms(train_dtm_tf2)
 
@@ -165,7 +163,6 @@ train_tf <- as.data.frame(cbind(train_df_tf, train_label))
 
 # Change the name of the last column
 colnames(train_tf)[ncol(train_tf)] <- "label"
-
 
 # Create the training data frame (binary) 
 train_df_bin <- as.data.frame(as.matrix(train_dtm_bin2))
@@ -220,7 +217,6 @@ train_results <- resamples(list(tf = model_tf,
                                 tfidf = model_tfidf))
 summary(train_results)
 
-
 # ------------------------------------------------------------------
 # (6) PREPARE THE TEST DATASET
 
@@ -246,7 +242,6 @@ test_df_tf_bagofwords <- test_df_tf_allwords[,bagofwords]
 test_df_bin_bagofwords <- test_df_bin_allwords[,bagofwords]  
 test_df_tfidf_bagofwords <- test_df_tfidf_allwords[,bagofwords]  
 
-
 # ------------------------------------------------------------------
 # (7) TEST THE MODELS
 
@@ -271,5 +266,3 @@ confusionMatrix(data = test_tfidf,
                 reference = test_hamspam$label, 
                 positive = "spam", 
                 dnn = c("Prediction", "Actual"))
-
-
