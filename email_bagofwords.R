@@ -80,8 +80,8 @@ head(rownames(hamspam_df2), n = 10)
 
 
 # 80%/20% training/testing split = 3916/979 
-train_hamspam = hamspam_df2[1:3916,]
-test_hamspam = hamspam_df2[3917:4895,]
+train_hamspam <- hamspam_df2[1:3916,]
+test_hamspam <- hamspam_df2[3917:4895,]
 
 # Write to CSV files
 write.csv(train_hamspam, "d://email_classifier/train_hamspam.csv")
@@ -114,8 +114,8 @@ train_corpus <- VCorpus(VectorSource(train_hamspam$text))
 train_corpus2 <- clean_corpus(train_corpus)
 
 # Create the complete DTM and reduced DTM (term frequency)
-train_dtm_tf = DocumentTermMatrix(train_corpus2, control = list(weighting = weightTf))
-train_dtm_tf2 = removeSparseTerms(train_dtm_tf, 0.96)
+train_dtm_tf <- DocumentTermMatrix(train_corpus2, control = list(weighting = weightTf))
+train_dtm_tf2 <- removeSparseTerms(train_dtm_tf, 0.96)
 
 inspect(train_dtm_tf)
 inspect(train_dtm_tf2)
@@ -132,20 +132,20 @@ train_corpus3 <- train_corpus2 %>%
                         "www","xls","subject","Subject"))
 
 # Create the final reduced DTM (tf)
-train_dtm_tf = DocumentTermMatrix(train_corpus3, control = list(weighting = weightTf))
-train_dtm_tf2 = removeSparseTerms(train_dtm_tf, 0.96)
+train_dtm_tf <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightTf))
+train_dtm_tf2 <- removeSparseTerms(train_dtm_tf, 0.96)
 
 
 # List all the words in the final BoW
 Terms(train_dtm_tf2)
 
 # Create the final DTM (binary)
-train_dtm_bin = DocumentTermMatrix(train_corpus3, control = list(weighting = weightBin))
-train_dtm_bin2 = removeSparseTerms(train_dtm_bin, 0.96)
+train_dtm_bin <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightBin))
+train_dtm_bin2 <- removeSparseTerms(train_dtm_bin, 0.96)
 
 # Create the final DTM (tfidf)
-train_dtm_tfidf = DocumentTermMatrix(train_corpus3, control = list(weighting = weightTfIdf))
-train_dtm_tfidf2 = removeSparseTerms(train_dtm_tfidf, 0.96)
+train_dtm_tfidf <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightTfIdf))
+train_dtm_tfidf2 <- removeSparseTerms(train_dtm_tfidf, 0.96)
 
 inspect(train_dtm_tf2)
 inspect(train_dtm_bin2)
