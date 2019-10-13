@@ -1,12 +1,39 @@
 # EMAIL CLASSIFIER USING THE BAG OF WORDS MODEL
 
-# For step (1), download the raw data from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
+# For step (1), download the raw data (ham and spam text files) from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
 
 # (1) PREPARE THE RAW DATA
-# You can skip step (1) and proceed to step (2) using ham.csv and spam.csv provided here.
+# You can skip step (1) and proceed to step (2) using ham.csv and spam.csv provided in email-classifier/data.
 
-# Spam text files stored in d://email_classifier/data/spam/
-setwd("d://email_classifier/data/spam")
+# Ham text files stored in d://email-classifier/data/ham
+setwd("d://email-classifier/data/ham")
+mydir <- getwd()
+
+# Concatenate all text files
+fileham <- list.files(mydir, full.names = TRUE, pattern = "*.txt")
+textham1 <- lapply(fileham, readLines)
+textham2 <- sapply(textham1, paste, collapse = " ")
+
+# Uncomment if you want to see the output
+# head(fileham, n = 3)
+# head(textham1, n = 3)
+# head(textham2, n = 3)
+
+# Remove duplicates
+textham_df <- data.frame(textham2)
+textham_df2 <- unique(textham_df)
+
+# Check number of spam before and after removing duplicates 
+nrow(textham_df)
+nrow(textham_df2)
+
+# Write to CSV file so that we can view the data in a spreadsheet
+ham_df <- data.frame(text = textham_df2, label = "ham")
+write.csv(ham_df, "d://email-classifier/data/ham.csv")
+
+# Same process for spam emails
+# Spam text files stored in d://email-classifier/data/spam
+setwd("d://email-classifier/data/spam")
 mydir <- getwd()
 
 # Concatenate all text files
@@ -30,30 +57,9 @@ nrow(textspam_df2)
 # Create dataframe with a new column for the labels 
 spam_df <- data.frame(text = textspam_df2, label = "spam")
 
-# CSV file allows viewing of data in Excel
-write.csv(spam_df, "d://email_classifier/data/spam.csv")
+# Write to CSV file so that we can view the data in a spreadsheet
+write.csv(spam_df, "d://email-classifier/data/spam.csv")
 
-# Same process for ham emails
-
-setwd("d://email_classifier/data/ham")
-mydir <- getwd()
-
-fileham <- list.files(mydir, full.names = TRUE, pattern = "*.txt")
-textham1 <- lapply(fileham, readLines)
-textham2 <- sapply(textham1, paste, collapse = " ")
-
-# head(fileham, n = 3)
-# head(textham1, n = 3)
-# head(textham2, n = 3)
-
-textham_df <- data.frame(textham2)
-textham_df2 <- unique(textham_df)
-
-nrow(textham_df)
-nrow(textham_df2)
-
-ham_df <- data.frame(text = textham_df2, label = "ham")
-write.csv(ham_df, "d://email_classifier/data/ham.csv")
 
 # ------------------------------------------------------------------
 # (2) SHUFFLE ROWS AND SPLIT DATA INTO TRAINING AND TEST DATASETS
@@ -88,8 +94,8 @@ train_hamspam <- hamspam_df2[1:3916,]
 test_hamspam <- hamspam_df2[3917:4895,]
 
 # Write to CSV files
-write.csv(train_hamspaum, "d://email_classifier/train_hamspam.csv")
-write.csv(test_hamspam, "d://email_classifier/test_hamspam.csv")
+# write.csv(train_hamspaum, "d://email-classifier/data/trainhamspam.csv")
+# write.csv(test_hamspam, "d://email-classifier/data/testhamspam.csv")
 
 # ------------------------------------------------------------------
 # (3) CLEAN TRAINING DATA AND CREATE THE DOCUMENT TERM MATRIX
@@ -101,7 +107,7 @@ library(tm)
 library(dplyr)
 
 # Function to clean a corpus
-clean_corpus <- function(corpus){
+clean_corpus <- function(corpus) {
   corpus <- corpus %>% 
     tm_map(removeNumbers) %>%
     tm_map(removePunctuation) %>%
