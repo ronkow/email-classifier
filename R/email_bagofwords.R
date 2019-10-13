@@ -95,7 +95,7 @@ train_hamspam <- hamspam_df2[1:3916,]
 test_hamspam <- hamspam_df2[3917:4895,]
 
 # Write to CSV files
-# write.csv(train_hamspaum, "d://email-classifier/data/trainhamspam.csv")
+# write.csv(train_hamspam, "d://email-classifier/data/trainhamspam.csv")
 # write.csv(test_hamspam, "d://email-classifier/data/testhamspam.csv")
 
 # ------------------------------------------------------------------
