@@ -6,7 +6,7 @@
 # If you do not wish to download and prepare the raw data, you can skip step (1) 
 # and proceed to step (2) using ham.csv and spam.csv provided in email-classifier/data
 
-# Ham text files stored in d://email-classifier/data/ham
+# Ham text files downloaded and stored in d://email-classifier/data/ham
 setwd("d://email-classifier/data/ham")
 mydir <- getwd()
 
@@ -33,7 +33,7 @@ ham_df <- data.frame(text = textham_df2, label = "ham")
 write.csv(ham_df, "d://email-classifier/data/ham.csv")
 
 # Same process for spam emails
-# Spam text files stored in d://email-classifier/data/spam
+# Spam text files downloaded and stored in d://email-classifier/data/spam
 setwd("d://email-classifier/data/spam")
 mydir <- getwd()
 
