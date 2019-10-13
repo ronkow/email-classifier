@@ -58,6 +58,11 @@ write.csv(ham_df, "d://email_classifier/data/ham.csv")
 # ------------------------------------------------------------------
 # (2) SHUFFLE ROWS AND SPLIT DATA INTO TRAINING AND TEST DATASETS
 
+# If you wish to skip Step 1 and use ham.csv and spam.csv prepared in Step 1 
+# setwd("d://email-classifier/data")
+# ham_df <- read.csv("ham.csv", header = TRUE)
+# spam_df <- read.csv("spam.csv", header = TRUE)
+
 # Combine ham and spam data frames into one data frame
 colnames(ham_df) <- c("text","label")
 colnames(spam_df) <- c("text","label")
