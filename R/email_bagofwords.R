@@ -278,3 +278,22 @@ confusionMatrix(data = test_tfidf,
                 reference = test_hamspam$label, 
                 positive = "spam", 
                 dnn = c("Prediction", "Actual"))
+
+# ------------------------------------------------------------------
+# (9) IMPROVING THE MODEL: A SIMPLE ANALYSIS
+
+# Create separate data frames for the BoW with only ham or spam records
+train_ham <- train_tf[train_tf$label=="ham",]
+train_spam <- train_tf[train_tf$label=="spam",]
+
+# Sum the occurrences of each of the 172 words
+train_ham_wordcount <- colSums(train_ham[,c(1:105)])
+train_spam_wordcount <- colSums(train_spam[,c(1:105)])
+
+# Create a matrix of word counts and the differences bewteen the counts in ham and in spam
+difference <- abs(train_ham_wordcount - train_spam_wordcount)
+train_wordcount <- cbind(train_ham_wordcount, train_spam_wordcount, difference)
+colnames(train_wordcount) <- c("ham", "spam", "difference")
+
+# List the 105 words 
+train_wordcount
