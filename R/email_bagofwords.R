@@ -3,7 +3,8 @@
 # For step (1), download the raw data (ham and spam text files) from: http://www.aueb.gr/users/ion/data/enron-spam/preprocessed/enron1.tar.gz
 
 # (1) PREPARE THE RAW DATA
-# You can skip step (1) and proceed to step (2) using ham.csv and spam.csv provided in email-classifier/data.
+# If you do not wish to download and prepare the raw data, you can skip step (1) 
+# and proceed to step (2) using ham.csv and spam.csv provided in email-classifier/data
 
 # Ham text files stored in d://email-classifier/data/ham
 setwd("d://email-classifier/data/ham")
