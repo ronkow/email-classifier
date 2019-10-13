@@ -195,21 +195,21 @@ library(caret)
 # Train the tf model
 starttime <- Sys.time()
 set.seed(123)
-model_tf <- train(label~ . , data = train_tf, method = "glm", metric = "Accuracy")
+model_tf <- train(label~ . , data = train_tf, method = "glm")
 endtime <- Sys.time()
 traintime_tf <- endtime - starttime
 
 # Train the binary model
 starttime <- Sys.time()
 set.seed(123)
-model_bin <- train(label~ . , data = train_bin, method = "glm", metric = "Accuracy")
+model_bin <- train(label~ . , data = train_bin, method = "glm")
 endtime <- Sys.time()
 traintime_bin <- endtime - starttime
 
 # Train the tfidf model
 starttime <- Sys.time()
 set.seed(123)
-model_tfidf <- train(label~ . , data = train_tfidf, method = "glm", metric = "Accuracy")
+model_tfidf <- train(label~ . , data = train_tfidf, method = "glm")
 endtime <- Sys.time()
 traintime_tfidf <- endtime - starttime
 
