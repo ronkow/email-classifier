@@ -69,10 +69,14 @@ write.csv(spam_df, "d://email-classifier/data/spam.csv")
 # setwd("d://email-classifier/data")
 # ham_df <- read.csv("ham.csv", header = TRUE)
 # spam_df <- read.csv("spam.csv", header = TRUE)
+# colnames(ham_df) <- c("number","text","label")
+# colnames(spam_df) <- c("number","text","label")
 
-# Combine ham and spam data frames into one data frame
-colnames(ham_df) <- c("number","text","label")
-colnames(spam_df) <- c("number","text","label")
+# If you did Step 1: combine ham and spam data frames into one data frame
+colnames(ham_df) <- c("text","label")
+colnames(spam_df) <- c("text","label")
+
+# Combine the ham and spam data frames
 hamspam_df <- rbind(ham_df, spam_df)
 
 # Shuffle the row numbers (1 to 4895)
