@@ -23,8 +23,10 @@ text_ham_df_unique <- unique(text_ham_df)
 nrow(text_ham_df)
 nrow(text_ham_df_unique)
 
-# Write to CSV file so that we can view the data in a spreadsheet
+# Create data frame with a new column for the labels
 ham_df <- data.frame(text_ham_df_unique, label="ham")
+
+# Write to CSV file so that we can view the data in a spreadsheet
 write.csv(ham_df, file="d://email-classifier/data/ham.csv", row.names=FALSE)
 
 # Same process for spam emails
@@ -45,24 +47,22 @@ text_spam_df_unique <- unique(text_spam_df)
 nrow(text_spam_df)
 nrow(text_spam_df_unique)
 
-# Create dataframe with a new column for the labels 
+# Create data frame with a new column for the labels 
 spam_df <- data.frame(text_spam_df_unique, label="spam")
 
 # Write to CSV file so that we can view the data in a spreadsheet
 write.csv(spam_df, file="d://email-classifier/data/spam.csv", row.names=FALSE)
-
 
 # ------------------------------------------------------------------
 # (2) SHUFFLE ROWS AND SPLIT DATA INTO TRAINING AND TEST DATASETS
 
 # If you wish to skip Step 1 and use ham.csv and spam.csv prepared in Step 1 
 # setwd("d://email-classifier/data")
-# ham_df <- read.csv("ham.csv", header = TRUE)
-# spam_df <- read.csv("spam.csv", header = TRUE)
-# colnames(ham_df) <- c("number","text","label")
-# colnames(spam_df) <- c("number","text","label")
+# ham_df <- read.csv("ham.csv", header=TRUE)
+# spam_df <- read.csv("spam.csv", header=TRUE)
 
-# If you did Step 1: combine ham and spam data frames into one data frame
+# If you did Step 1, use the data frames from Step 1
+# Change the column names
 colnames(ham_df) <- c("text","label")
 colnames(spam_df) <- c("text","label")
 
