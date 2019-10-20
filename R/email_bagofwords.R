@@ -6,60 +6,50 @@
 # If you do not wish to download and prepare the raw data, you can skip step (1) 
 # and proceed to step (2) using ham.csv and spam.csv provided in email-classifier/data
 
-# Ham text files downloaded and stored in d://email-classifier/data/ham
-setwd("d://email-classifier/data/ham")
-mydir <- getwd()
+# Ham text files downloaded and stored in d://email-classifier/enron1/ham
+setwd("d://email-classifier/enron1/ham")
 
 # Concatenate all text files
-fileham <- list.files(mydir, full.names = TRUE, pattern = "*.txt")
-textham1 <- lapply(fileham, readLines)
-textham2 <- sapply(textham1, paste, collapse = " ")
-
-# Uncomment if you want to see the output
-# head(fileham, n = 3)
-# head(textham1, n = 3)
-# head(textham2, n = 3)
+files_ham <- list.files()
+lines_ham <- lapply(files_ham, readLines)
+text_ham <- sapply(lines_ham, paste, collapse=" ")
 
 # Remove duplicates
-textham_df <- data.frame(textham2)
-textham_df2 <- unique(textham_df)
+text_ham_df <- data.frame(text_ham)
+text_ham_df_unique <- unique(text_ham_df)
 
 # Check number of spam before and after removing duplicates 
-nrow(textham_df)
-nrow(textham_df2)
+# 3672 reduced to 3432 records
+nrow(text_ham_df)
+nrow(text_ham_df_unique)
 
 # Write to CSV file so that we can view the data in a spreadsheet
-ham_df <- data.frame(text = textham_df2, label = "ham")
-write.csv(ham_df, "d://email-classifier/data/ham.csv")
+ham_df <- data.frame(text_ham_df_unique, label="ham")
+write.csv(ham_df, file="d://email-classifier/data/ham.csv", row.names=FALSE)
 
 # Same process for spam emails
-# Spam text files downloaded and stored in d://email-classifier/data/spam
-setwd("d://email-classifier/data/spam")
-mydir <- getwd()
+# Spam text files downloaded and stored in d://email-classifier/enron1/spam
+setwd("d://email-classifier/enron1/spam")
 
 # Concatenate all text files
-filespam <- list.files(mydir, full.names = TRUE, pattern = "*.txt")
-textspam1 <- lapply(filespam, readLines)
-textspam2 <- sapply(textspam1, paste, collapse = " ")
-
-# Uncomment if you want to see the output
-# head(filespam, n = 2)
-# head(textspam1, n = 2)
-# head(textspam2, n = 2)
+files_spam <- list.files()
+lines_spam <- lapply(files_spam, readLines)
+text_spam <- sapply(lines_spam, paste, collapse=" ")
 
 # Remove duplicates
-textspam_df <- data.frame(textspam2)
-textspam_df2 <- unique(textspam_df)
+text_spam_df <- data.frame(text_spam)
+text_spam_df_unique <- unique(text_spam_df)
 
 # Check number of spam before and after removing duplicates 
-nrow(textspam_df)
-nrow(textspam_df2)
+# 1500 reduced to 1463 records
+nrow(text_spam_df)
+nrow(text_spam_df_unique)
 
 # Create dataframe with a new column for the labels 
-spam_df <- data.frame(text = textspam_df2, label = "spam")
+spam_df <- data.frame(text_spam_df_unique, label="spam")
 
 # Write to CSV file so that we can view the data in a spreadsheet
-write.csv(spam_df, "d://email-classifier/data/spam.csv")
+write.csv(spam_df, file="d://email-classifier/data/spam.csv", row.names=FALSE)
 
 
 # ------------------------------------------------------------------
