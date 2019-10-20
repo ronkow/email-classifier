@@ -53,8 +53,8 @@ clean_corpus <- function(corpus) {
 train_corpus <- VCorpus(VectorSource(train_hamspam$text))
 train_corpus_clean <- clean_corpus(train_corpus)
 
-train_dtm_tf = DocumentTermMatrix(train_corpus_clean, control=list(weighting=weightTf))
-train_dtm_tf_reduced = removeSparseTerms(train_dtm_tf, 0.98)
+train_dtm_tf <- DocumentTermMatrix(train_corpus_clean, control=list(weighting=weightTf))
+train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.98)
 
 
 # Function to clean a corpus
@@ -81,8 +81,8 @@ clean_corpus_words <- function(corpus) {
 
 train_corpus_clean_final <- clean_corpus_words(train_corpus_clean)
 
-train_dtm_tf = DocumentTermMatrix(train_corpus_clean_final, control=list(weighting=weightTf))
-train_dtm_tf_reduced = removeSparseTerms(train_dtm_tf, 0.98)
+train_dtm_tf <- DocumentTermMatrix(train_corpus_clean_final, control=list(weighting=weightTf))
+train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.98)
 
 inspect(train_dtm_tf_reduced)
 Terms(train_dtm_tf_reduced)
@@ -163,8 +163,8 @@ test_tf <- predict(model_tf, test_df_tf_bow)
 # ------------------------------------------------------------------
 # (5) ANALYSE THE RESULTS
 
-confusionMatrix(data = test_tf, 
-                reference = test_hamspam$label, 
-                positive = "spam", 
-                dnn = c("Prediction", "Actual"))
+confusionMatrix(data=test_tf, 
+                reference=test_hamspam$label, 
+                positive="spam", 
+                dnn=c("Prediction", "Actual"))
 
