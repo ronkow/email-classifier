@@ -75,22 +75,14 @@ numofrows <-  nrow(hamspam_df)
 randomindex <- sample(numofrows, numofrows, replace = FALSE)
 
 # Create a new data frame with shuffled rows
-hamspam_df2 <- hamspam_df[randomindex,]
+hamspam_df_random <- hamspam_df[randomindex,]
 
 # Re-number the rows in the new data frame
-rownames(hamspam_df2) <- c(1:numofrows)
-
-head(randomindex, n = 10)
-head(hamspam_df2, n = 3)
-head(rownames(hamspam_df2), n = 10)
+rownames(hamspam_df_random) <- c(1:numofrows)
 
 # 80%/20% training/testing split = 3916/979 
-train_hamspam <- hamspam_df2[1:3916,]
-test_hamspam <- hamspam_df2[3917:4895,]
-
-# Write to CSV files
-# write.csv(train_hamspam, "d://email-classifier/data/trainhamspam.csv")
-# write.csv(test_hamspam, "d://email-classifier/data/testhamspam.csv")
+train_hamspam <- hamspam_df_random[1:3916,]
+test_hamspam <- hamspam_df_random[3917:4895,]
 
 # ------------------------------------------------------------------
 # (3) CLEAN TRAINING DATA AND CREATE THE DOCUMENT TERM MATRIX
@@ -103,29 +95,29 @@ library(dplyr)
 
 # Function to clean a corpus
 clean_corpus <- function(corpus) {
-  corpus <- corpus %>% 
+    corpus <- corpus %>% 
     tm_map(removeNumbers) %>%
     tm_map(removePunctuation) %>%
     tm_map(stripWhitespace) %>%
-    tm_map(removeWords, stopwords(kind = "SMART")) 
+    tm_map(removeWords, stopwords(kind="en")) 
 }
 
 # Create corpus and clean data
 train_corpus <- VCorpus(VectorSource(train_hamspam$text))
-train_corpus2 <- clean_corpus(train_corpus)
+train_corpus_clean <- clean_corpus(train_corpus)
 
 # Create the complete DTM and reduced DTM (term frequency)
-train_dtm_tf <- DocumentTermMatrix(train_corpus2, control = list(weighting = weightTf))
-train_dtm_tf2 <- removeSparseTerms(train_dtm_tf, 0.96)
+train_dtm_tf <- DocumentTermMatrix(train_corpus_clean, control=list(weighting=weightTf))
+train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.96)
 
 inspect(train_dtm_tf)
-inspect(train_dtm_tf2)
+inspect(train_dtm_tf_reduced)
 
 # List all the words in the Bag of Words (BoW)
-Terms(train_dtm_tf2)
+Terms(train_dtm_tf_reduced)
 
 # Remove names, abbreviations, acronyms from the BoW
-train_corpus3 <- train_corpus2 %>% 
+train_corpus_clean_final <- train_corpus_clean %>% 
   tm_map(removeWords, c("ami","bob","daren","david","don","ect","ena",
                         "enron","farmer","gary","hou","houston","hpl","http",
                         "mary","melissa","michael","mmbtu","nom","noms","pat",
@@ -133,23 +125,23 @@ train_corpus3 <- train_corpus2 %>%
                         "www","xls","subject","Subject"))
 
 # Create the final reduced DTM (tf)
-train_dtm_tf <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightTf))
-train_dtm_tf2 <- removeSparseTerms(train_dtm_tf, 0.96)
+train_dtm_tf <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightTf))
+train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.96)
 
 # List all the words in the final BoW
-Terms(train_dtm_tf2)
+Terms(train_dtm_tf_reduced)
 
 # Create the final DTM (binary)
-train_dtm_bin <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightBin))
-train_dtm_bin2 <- removeSparseTerms(train_dtm_bin, 0.96)
+train_dtm_bin <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightBin))
+train_dtm_bin_reduced <- removeSparseTerms(train_dtm_bin, 0.96)
 
 # Create the final DTM (tfidf)
-train_dtm_tfidf <- DocumentTermMatrix(train_corpus3, control = list(weighting = weightTfIdf))
-train_dtm_tfidf2 <- removeSparseTerms(train_dtm_tfidf, 0.96)
+train_dtm_tfidf <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightTfIdf))
+train_dtm_tfidf_reduced <- removeSparseTerms(train_dtm_tfidf, 0.96)
 
-inspect(train_dtm_tf2)
-inspect(train_dtm_bin2)
-inspect(train_dtm_tfidf2)
+inspect(train_dtm_tf_reduced)
+inspect(train_dtm_bin_reduced)
+inspect(train_dtm_tfidf_reduced)
 
 # ------------------------------------------------------------------
 # (4) CREATE THE DATA FRAME FOR TRAINING
@@ -158,7 +150,7 @@ inspect(train_dtm_tfidf2)
 train_label <- as.character(train_hamspam$label)
 
 # Convert DTM (tf) to data frame
-train_df_tf <- as.data.frame(as.matrix(train_dtm_tf2))
+train_df_tf <- as.data.frame(as.matrix(train_dtm_tf_reduced))
 
 # Create the training data frame (tf)
 train_tf <- as.data.frame(cbind(train_df_tf, train_label))
@@ -167,12 +159,12 @@ train_tf <- as.data.frame(cbind(train_df_tf, train_label))
 colnames(train_tf)[ncol(train_tf)] <- "label"
 
 # Create the training data frame (binary) 
-train_df_bin <- as.data.frame(as.matrix(train_dtm_bin2))
+train_df_bin <- as.data.frame(as.matrix(train_dtm_bin_reduced))
 train_bin <- as.data.frame(cbind(train_df_bin, train_label))
 colnames(train_bin)[ncol(train_bin)] <- "label"
 
 # Create the training data frame (tfidf)
-train_df_tfidf <- as.data.frame(as.matrix(train_dtm_tfidf2))
+train_df_tfidf <- as.data.frame(as.matrix(train_dtm_tfidf_reduced))
 train_tfidf <- as.data.frame(cbind(train_df_tfidf, train_label))
 colnames(train_tfidf)[ncol(train_tfidf)] <- "label"
 
@@ -227,22 +219,22 @@ bagofwords <- colnames(train_df_tf)
 
 # Basic cleaning
 test_corpus <- VCorpus(VectorSource(test_hamspam$text))
-test_corpus2 <- clean_corpus(test_corpus)
+test_corpus_clean <- clean_corpus(test_corpus)
 
 # DTM with all words
-test_dtm_tf_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightTf))
-test_dtm_bin_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightBin))
-test_dtm_tfidf_allwords <- DocumentTermMatrix(test_corpus2, control = list(weighting = weightTfIdf))
+test_dtm_tf <- DocumentTermMatrix(test_corpus_clean, control=list(weighting=weightTf))
+test_dtm_bin <- DocumentTermMatrix(test_corpus_clean, control=list(weighting=weightBin))
+test_dtm_tfidf <- DocumentTermMatrix(test_corpus_clean, control=list(weighting=weightTfIdf))
 
 # Convert DTM to data frame
-test_df_tf_allwords <- as.data.frame(as.matrix(test_dtm_tf_allwords))
-test_df_bin_allwords <- as.data.frame(as.matrix(test_dtm_bin_allwords))
-test_df_tfidf_allwords <- as.data.frame(as.matrix(test_dtm_tfidf_allwords))
+test_df_tf <- as.data.frame(as.matrix(test_dtm_tf))
+test_df_bin <- as.data.frame(as.matrix(test_dtm_bin))
+test_df_tfidf <- as.data.frame(as.matrix(test_dtm_tfidf))
 
 # Create data frame with only the 105 columns 
-test_df_tf_bagofwords <- test_df_tf_allwords[,bagofwords]  
-test_df_bin_bagofwords <- test_df_bin_allwords[,bagofwords]  
-test_df_tfidf_bagofwords <- test_df_tfidf_allwords[,bagofwords]  
+test_df_tf_bagofwords <- test_df_tf[,bagofwords]  
+test_df_bin_bagofwords <- test_df_bin[,bagofwords]  
+test_df_tfidf_bagofwords <- test_df_tfidf[,bagofwords]  
 
 # ------------------------------------------------------------------
 # (7) TEST THE MODELS
