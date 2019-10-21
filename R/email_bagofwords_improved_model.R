@@ -1,33 +1,10 @@
 # EMAIL CLASSIFIER USING THE BAG OF WORDS: IMPROVED MODEL
 
-# (1) SHUFFLE ROWS AND SPLIT DATA INTO TRAINING AND TEST DATASETS
+# (1) USE train.csv and test.csv CREATED FOR PREVIOUS MODEL
 
 setwd("d://email-classifier/data")
-ham_df <- read.csv("ham.csv", header=TRUE)
-spam_df <- read.csv("spam.csv", header=TRUE)
-
-colnames(ham_df) <- c("text", "label")
-colnames(spam_df) <- c("text", "label")
-
-
-# Combine the ham and spam data frames
-hamspam_df <- rbind(ham_df, spam_df)
-
-# Shuffle the row numbers (1 to 4895)
-set.seed(123)
-numofrows <-  nrow(hamspam_df)
-randomrows <- sample(numofrows, numofrows, replace=FALSE)
-
-# Create a new data frame with shuffled rows
-hamspam_df_random <- hamspam_df[randomrows,]
-
-# Re-number the rows in the new data frame
-rownames(hamspam_df_random) <- c(1:numofrows)
-
-# 80%/20% training/testing split = 3916/979 
-train_hamspam <- hamspam_df_random[1:3916,]
-test_hamspam <- hamspam_df_random[3917:4895,]
-
+train_hamspam <- read.csv("train.csv", header=TRUE)
+test_hamspam <- read.csv("test.csv", header=TRUE)
 
 # ------------------------------------------------------------------
 # (2) CLEAN TRAINING DATA AND CREATE THE DOCUMENT TERM MATRIX
