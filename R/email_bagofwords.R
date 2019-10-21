@@ -121,7 +121,7 @@ Terms(train_dtm_tf_initial_reduced)
 
 # Remove names, abbreviations, acronyms from the BoW
 train_corpus_clean_final <- train_corpus_clean %>% 
-  tm_map(removeWords, c("ami","bob","daren","david","don","ect","ena",
+  tm_map(removeWords, c("ami","bob","com","daren","david","don","ect","ena",
                         "enron","farmer","gary","hou","houston","hpl","http",
                         "mary","melissa","michael","mmbtu","nom","noms","pat",
                         "robert","sitara","smith","taylor","teco","texas","vance",
