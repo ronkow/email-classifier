@@ -91,7 +91,7 @@ train_spam_wordcount <- colSums(train_spam[,c(1:475)])
 # Create a matrix of word counts and the proportion: counts in ham / counts in spam
 proportion <- train_ham_wordcount/train_spam_wordcount
 train_wordcount <- cbind(train_ham_wordcount, train_spam_wordcount, proportion)
-colnames(train_wordcount) <- c("ham", "spam", "proportion")
+colnames(train_wordcount) <- c("ham", "spam", "ham/spam")
 
 # Choose words
 train_wordcount <- data.frame(train_wordcount)
