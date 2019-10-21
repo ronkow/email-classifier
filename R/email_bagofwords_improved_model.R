@@ -85,8 +85,8 @@ train_ham <- train_tf[train_tf$label=="ham",]
 train_spam <- train_tf[train_tf$label=="spam",]
 
 # Sum the occurrences of each of the 475 words
-train_ham_wordcount <- colSums(train_ham[,c(1:475)])
-train_spam_wordcount <- colSums(train_spam[,c(1:475)])
+train_ham_wordcount <- colSums(train_ham[,c(1:ncol(train_df_tf))])
+train_spam_wordcount <- colSums(train_spam[,c(1:ncol(train_df_tf))])
 
 # Create a matrix of word counts and the proportion: counts in ham / counts in spam
 proportion <- train_ham_wordcount/train_spam_wordcount
