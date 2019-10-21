@@ -217,7 +217,7 @@ summary(train_results)
 # ------------------------------------------------------------------
 # (6) PREPARE THE TEST DATASET
 
-# Create a vector containing the 105 words in the BoW
+# Create a vector containing the set of words in the BoW
 bagofwords <- colnames(train_df_tf)
 
 # Basic cleaning
@@ -234,7 +234,7 @@ test_df_tf <- as.data.frame(as.matrix(test_dtm_tf))
 test_df_bin <- as.data.frame(as.matrix(test_dtm_bin))
 test_df_tfidf <- as.data.frame(as.matrix(test_dtm_tfidf))
 
-# Create data frame with only the 105 columns 
+# Create data frame with only the columns with the BoW 
 test_df_tf_bagofwords <- test_df_tf[,bagofwords]  
 test_df_bin_bagofwords <- test_df_bin[,bagofwords]  
 test_df_tfidf_bagofwords <- test_df_tfidf[,bagofwords]  
@@ -271,7 +271,7 @@ confusionMatrix(data = test_tfidf,
 train_ham <- train_tf[train_tf$label=="ham",]
 train_spam <- train_tf[train_tf$label=="spam",]
 
-# Sum the occurrences of each of the 172 words
+# Sum the occurrences of each of the words in the BoW
 train_ham_wordcount <- colSums(train_ham[,c(1:105)])
 train_spam_wordcount <- colSums(train_spam[,c(1:105)])
 
@@ -280,5 +280,5 @@ difference <- abs(train_ham_wordcount - train_spam_wordcount)
 train_wordcount <- cbind(train_ham_wordcount, train_spam_wordcount, difference)
 colnames(train_wordcount) <- c("ham", "spam", "difference")
 
-# List the 105 words 
+# List the words 
 train_wordcount
