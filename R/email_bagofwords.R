@@ -116,7 +116,7 @@ train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.96)
 inspect(train_dtm_tf)
 inspect(train_dtm_tf_reduced)
 
-# List all the words in the Bag of Words (BoW)
+# List all the words in the initial Bag of Words (BoW)
 Terms(train_dtm_tf_reduced)
 
 # Remove names, abbreviations, acronyms from the BoW
@@ -128,18 +128,18 @@ train_corpus_clean_final <- train_corpus_clean %>%
                         "www","xls","subject","Subject"))
 
 # Create the final reduced DTM (tf)
-train_dtm_tf <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightTf))
+train_dtm_tf <- DocumentTermMatrix(train_corpus_clean_final, control=list(weighting=weightTf))
 train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.96)
 
 # List all the words in the final BoW
 Terms(train_dtm_tf_reduced)
 
 # Create the final DTM (binary)
-train_dtm_bin <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightBin))
+train_dtm_bin <- DocumentTermMatrix(train_corpus_clean_final, control=list(weighting=weightBin))
 train_dtm_bin_reduced <- removeSparseTerms(train_dtm_bin, 0.96)
 
 # Create the final DTM (tfidf)
-train_dtm_tfidf <- DocumentTermMatrix(train_corpus_reduced_final, control=list(weighting=weightTfIdf))
+train_dtm_tfidf <- DocumentTermMatrix(train_corpus_clean_final, control=list(weighting=weightTfIdf))
 train_dtm_tfidf_reduced <- removeSparseTerms(train_dtm_tfidf, 0.96)
 
 inspect(train_dtm_tf_reduced)
