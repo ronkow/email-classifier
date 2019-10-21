@@ -109,15 +109,15 @@ clean_corpus <- function(corpus) {
 train_corpus <- VCorpus(VectorSource(train_hamspam$text))
 train_corpus_clean <- clean_corpus(train_corpus)
 
-# Create the complete DTM and reduced DTM (term frequency)
-train_dtm_tf <- DocumentTermMatrix(train_corpus_clean, control=list(weighting=weightTf))
-train_dtm_tf_reduced <- removeSparseTerms(train_dtm_tf, 0.96)
+# Create the initial DTM (term frequency) for inspection of words
+train_dtm_tf_initial <- DocumentTermMatrix(train_corpus_clean, control=list(weighting=weightTf))
+train_dtm_tf_initial_reduced <- removeSparseTerms(train_dtm_tf_initial, 0.96)
 
-inspect(train_dtm_tf)
-inspect(train_dtm_tf_reduced)
+inspect(train_dtm_tf_initial)
+inspect(train_dtm_tf_initial_reduced)
 
 # List all the words in the initial Bag of Words (BoW)
-Terms(train_dtm_tf_reduced)
+Terms(train_dtm_tf_initial_reduced)
 
 # Remove names, abbreviations, acronyms from the BoW
 train_corpus_clean_final <- train_corpus_clean %>% 
