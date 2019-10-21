@@ -272,13 +272,14 @@ train_ham <- train_tf[train_tf$label=="ham",]
 train_spam <- train_tf[train_tf$label=="spam",]
 
 # Sum the occurrences of each of the words in the BoW
-train_ham_wordcount <- colSums(train_ham[,c(1:105)])
-train_spam_wordcount <- colSums(train_spam[,c(1:105)])
+train_ham_wordcount <- colSums(train_ham[,c(1:ncol(train_df_tf))])
+train_spam_wordcount <- colSums(train_spam[,c(1:ncol(train_df_tf))])
 
-# Create a matrix of word counts and the differences bewteen the counts in ham and in spam
-difference <- abs(train_ham_wordcount - train_spam_wordcount)
-train_wordcount <- cbind(train_ham_wordcount, train_spam_wordcount, difference)
-colnames(train_wordcount) <- c("ham", "spam", "difference")
+# Create a matrix of word counts and the differences and proportions
+difference <- train_ham_wordcount - train_spam_wordcount
+proportion <- train_ham_wordcount / train_spam_wordcount
+train_wordcount <- cbind(train_ham_wordcount, train_spam_wordcount, difference, proportion)
+colnames(train_wordcount) <- c("ham", "spam", "ham-spam", "ham/spam")
 
 # List the words 
 train_wordcount
