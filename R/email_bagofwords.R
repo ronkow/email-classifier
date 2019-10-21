@@ -50,7 +50,7 @@ nrow(text_spam_df_unique)
 # Create data frame with a new column for the labels 
 spam_df <- data.frame(text_spam_df_unique, label="spam")
 
-# Write to CSV file so that we can view the data in a spreadsheet
+# Write to CSV file so that we can view the data in a spreadsheet 
 write.csv(spam_df, file="d://email-classifier/data/spam.csv", row.names=FALSE)
 
 # ------------------------------------------------------------------
@@ -83,6 +83,9 @@ rownames(hamspam_df_random) <- c(1:numofrows)
 # 80%/20% training/testing split = 3916/979 
 train_hamspam <- hamspam_df_random[1:3916,]
 test_hamspam <- hamspam_df_random[3917:4895,]
+
+write.csv(train_hamspam, file="train.csv", row.names=FALSE)
+write.csv(test_hamspam, file="test.csv", row.names=FALSE)
 
 # ------------------------------------------------------------------
 # (3) CLEAN TRAINING DATA AND CREATE THE DOCUMENT TERM MATRIX
